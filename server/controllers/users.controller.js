@@ -85,13 +85,19 @@ export async function loginUser(req, res) {
         // If the password is correct, create a JWT token.
         const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY, { expiresIn: "1h" });
 
+        // Add the token to the user cookies
+        res.cookie("token", token, { 
+            httpOnly: true,
+            maxAge: 3600000, 
+        });
+
         // Return the token as well as the user information
 
         res.json({token: token,user: user });
 
 
     } catch (error) {
-        console.error(error);
+        console.error(error, " occured in loginUser function");
         res.status(500).json({ message: "Server error" });
     }
 } 
