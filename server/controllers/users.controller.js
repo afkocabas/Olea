@@ -43,17 +43,18 @@ export async function getUserByUsername(req, res) {
 
 export async function createUser(req, res) {
     try {
+        const { username, password } = req.body;
 
         // check if the username is already taken
-        const [rows] = await database.query("SELECT * FROM users WHERE username = ?", [req.body.username]);
+        const [rows] = await database.query("SELECT * FROM users WHERE username = ?", [username]);
         if (rows.length > 0) {
             return res.status(400).json({ message: "Username already taken" });
         }
 
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
         
         const [result] = await database.query("INSERT INTO users (username, password) VALUES (?, ?)", 
-            [req.body.username, hashedPassword]);
+            [username, hashedPassword]);
 
         // return the new user
         res.status(201).json({ id: result.insertId, ...req.body });
@@ -66,17 +67,18 @@ export async function createUser(req, res) {
 
 export async function loginUser(req, res) {
     try {
-        // Check if the user exists on the database
-        const [rows] = await database.query("SELECT * FROM users WHERE username = ?", [req.body.username]);
-        // If the user does not exist, return an error
+        const { username, password } = req.body;
+
+        // check if the username exists
+        const [rows] = await database.query("SELECT * FROM users WHERE username = ?", [username]);
         if (rows.length === 0) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
 
         // If the user exists, check if the password is correct
         const user = rows[0];
+        const validPassword = await bcrypt.compare(password, user.password);
 
-        const validPassword = await bcrypt.compare(req.body.password, user.password);
         // If the password is incorrect, return an error
         if (!validPassword) {
             return res.status(401).json({ message: "Invalid username or password" });
@@ -89,17 +91,19 @@ export async function loginUser(req, res) {
         res.cookie("token", token, { 
             httpOnly: true,
             maxAge: 3600000, 
-            samesite: 'lax'
+            samesite: 'lax' 
         });
 
-        // Return the token as well as the user information
+        // return the user
+        res.status(200).json( { 
 
-        res.json({token: token,user: user });
-
+            user: { id: user.user_id, username: user.username }, 
+            token: token 
+        });
 
     } catch (error) {
-        console.error(error, " occured in loginUser function");
+        console.error(error);
         res.status(500).json({ message: "Server error" });
     }
-} 
+}
 

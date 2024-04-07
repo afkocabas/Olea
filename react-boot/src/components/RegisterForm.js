@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -7,14 +8,24 @@ import useAlert from '../hooks/useAlert';
 
 import CustomAlert from './CustomAlert';
 
+import {registerUser } from '../api/userService.js';
+
+
 function RegisterForm() {
     const {values, handleChange}  = useForm({initialState: {username: '', password: '', confirm: ''}});
     const [showAlert, raiseAlert] = useAlert(false);    
     const [alertMessage, setAlertMessage] = useState('');
+    const [alertVariant, setAlertVariant] = useState('danger');
+
+
+
+    const navigation = useNavigate(); 
 
     const MESSAGE_FOR_EMPTY_FIELDS = 'Please fill in all fields.';
     const MESSAGE_FOR_PASSWORD_MISMATCH = 'Passwords do not match.';
     const MESSAGE_FOR_USERNAME_TAKEN = 'Username is already taken.';
+    const MESSAGE_FOR_SERVER_ERROR = 'Server error.';
+    const MESSAGE_FOR_SUCCESSFUL_REGISTRATION = 'User registered successfully.';
 
     const validateForm = () => {
         if (
@@ -34,11 +45,42 @@ function RegisterForm() {
         return true;
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (validateForm()) {
-            console.log(values);
+            try {
+                const response = await registerUser({username:values.username, password: values.password});
+
+                if (response.status === 201) {
+                    console.log('User registered successfully');
+                    setAlertMessage(message => MESSAGE_FOR_SUCCESSFUL_REGISTRATION);
+                    setAlertVariant('success');
+                    raiseAlert();
+
+                    // after 1 second, navigate to login page
+                    setTimeout(() => {
+                        navigation('/login');
+                    }, 1000);   
+                }
+            }
+
+            catch(error) {
+                if(!error.response) {
+                    console.log(error);
+                    return;
+                }
+                if (error.response.status === 400) {
+                    setAlertMessage(MESSAGE_FOR_USERNAME_TAKEN);
+                    raiseAlert();
+                }
+
+                if (error.response.status === 500) {
+                    setAlertMessage(MESSAGE_FOR_SERVER_ERROR);
+                    raiseAlert();
+                }
+            }
+
         }
         else {
             raiseAlert();
@@ -80,7 +122,7 @@ function RegisterForm() {
             <div className= "d-flex justify-content-center mb-3">
                 <Button variant="success" type="submit"> Register </Button>
             </div>
-            {showAlert && <CustomAlert variant='danger' message={alertMessage} />}
+            {showAlert && <CustomAlert variant={alertVariant} message={alertMessage} />}
         </Form>
     );
 }
