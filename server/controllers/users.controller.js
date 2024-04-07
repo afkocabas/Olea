@@ -1,5 +1,6 @@
 import database from "../database.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 // get all users from the database
 export async function getAllUsers(req, res) {
@@ -65,19 +66,29 @@ export async function createUser(req, res) {
 
 export async function loginUser(req, res) {
     try {
+        // Check if the user exists on the database
         const [rows] = await database.query("SELECT * FROM users WHERE username = ?", [req.body.username]);
+        // If the user does not exist, return an error
         if (rows.length === 0) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
 
+        // If the user exists, check if the password is correct
         const user = rows[0];
 
         const validPassword = await bcrypt.compare(req.body.password, user.password);
+        // If the password is incorrect, return an error
         if (!validPassword) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
 
-        res.json(user);
+        // If the password is correct, create a JWT token.
+        const token = jwt.sign({ id: user.user_id }, process.env.SECRET_KEY, { expiresIn: "1h" });
+
+        // Return the token as well as the user information
+
+        res.json({token: token,user: user });
+
 
     } catch (error) {
         console.error(error);
