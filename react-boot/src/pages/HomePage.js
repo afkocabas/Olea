@@ -5,7 +5,7 @@ import CourseCard from '../components/CourseCard';
 function HomePage() {
   return (
     <Container className='page'>
-      <Row>
+      <Row className='gy-4'>
         <Col sm={12} md={6} lg={3} className='d-flex justify-content-center'>
           <CourseCard />
         </Col>
