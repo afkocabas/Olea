@@ -1,19 +1,26 @@
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import useAuth from '../hooks/useAuth';
-
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import CourseCard from '../components/CourseCard';
 
 function HomePage() {
-    const {contextLogout} = useAuth();
-
-    // HomePage to be a page class
-    return (
-        <Container className="mt-5">
-            <h1>Home Page</h1>
-            <Button onClick={contextLogout}>Logout</Button>
-        </Container>
-    )
+  return (
+    <Container className='page'>
+      <Row>
+        <Col sm={12} md={6} lg={3} className='d-flex justify-content-center'>
+          <CourseCard />
+        </Col>
+        <Col sm={12} md={6} lg={3} className='d-flex justify-content-center'>
+          <CourseCard />
+        </Col>
+        <Col sm={12} md={6} lg={3} className='d-flex justify-content-center'>
+          <CourseCard />
+        </Col>
+        <Col sm={12} md={6} lg={3} className='d-flex justify-content-center'>
+          <CourseCard />
+        </Col>
+      </Row>
+    </Container>
+  );
 }
-
 
 export default HomePage;
