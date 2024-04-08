@@ -89,7 +89,6 @@ export async function loginUser(req, res) {
 
         // Add the token to the user cookies
         res.cookie("token", token, { 
-            httpOnly: true,
             maxAge: 3600000, 
             samesite: 'lax' 
         });

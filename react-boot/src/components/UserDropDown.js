@@ -8,6 +8,8 @@ import useAuth from '../hooks/useAuth';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-regular-svg-icons';
 
+import Cookie from 'js-cookie';
+
 function UserDropDown() {
     const {contextLogout} = useAuth();
     const {userName} = useUser();
@@ -15,6 +17,8 @@ function UserDropDown() {
 
     const handleLogout = () => {
         contextLogout();
+        localStorage.removeItem('token');
+        Cookie.remove('token')
         navigation('/login');
     }
     return (
