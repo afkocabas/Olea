@@ -5,6 +5,9 @@ import useUser from '../hooks/useUser';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUser} from '@fortawesome/free-regular-svg-icons';
+
 function UserDropDown() {
     const {contextLogout} = useAuth();
     const {userName} = useUser();
@@ -17,6 +20,7 @@ function UserDropDown() {
     return (
         <DropDown>
             <DropDown.Toggle variant="success" id="dropdown-basic">
+                <FontAwesomeIcon icon={faUser} style={{color: "white", marginRight: "8px"}} />
                 {userName}
             </DropDown.Toggle>
             <DropDown.Menu>
