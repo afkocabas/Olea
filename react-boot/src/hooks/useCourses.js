@@ -5,12 +5,14 @@ const useCourses = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [fields, setFields] = useState([]);
     
     useEffect(() => {
         const fetchCourses = async () => {
         try {
             const response = await getCourses();
             setCourses(response.data);
+            setFields([...new Set(response.data.map(course => course.course_major))])
             setLoading(false);
         } catch (error) {
             setError(error);
@@ -18,9 +20,11 @@ const useCourses = () => {
         }
         };
         fetchCourses();
+
+
     }, []);
     
-    return { courses, loading, error };
+    return { courses, loading, error, fields };
 };
 
 
