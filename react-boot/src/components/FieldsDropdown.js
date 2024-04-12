@@ -4,7 +4,7 @@ import { Dropdown } from 'react-bootstrap';
 function FieldDropdown({ fields, selectedField, setSelectedField }) {
     return (
         <Dropdown onSelect={setSelectedField}>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown.Toggle variant="light" id="dropdown-basic">
                 {selectedField}
             </Dropdown.Toggle>
 

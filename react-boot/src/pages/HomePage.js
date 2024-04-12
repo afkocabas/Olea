@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Container} from 'react-bootstrap';
 
 import CoursesList from '../components/CoursesList';
-import FieldDropdown from '../components/FieldsDropdown';
+import CoursesHeader from '../components/CoursesHeader';
 
 import useCourses from '../hooks/useCourses';
 
@@ -20,7 +20,7 @@ function HomePage() {
 
     return (
         <Container className='page mt-5 mb- 5 pb-5'>
-            <FieldDropdown fields={fields} selectedField={selectedField} setSelectedField={setSelectedField} />
+            <CoursesHeader fields={fields} selectedField={selectedField} setSelectedField={setSelectedField} />
             <CoursesList courses={filteredCourses} />
         </Container>
     );
