@@ -13,7 +13,7 @@ function CourseCard(props) {
     <Card style={{ width: '15rem'}} className='course-card' >
       <Card.Img 
       variant="top" 
-      src="https://hub.docker.com/api/media/repos_logo/v1/library%2Fmysql"
+      src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg"
       onLoad={() => setImageLoaded(true)}
        /> 
       {!imageLoaded && <BorderSpinner />}
