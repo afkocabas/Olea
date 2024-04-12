@@ -7,22 +7,22 @@ import BorderSpinner from './BorderSpinner';
 
 import { useState } from 'react';
 
-function CourseCard(props) {
+function CourseCard({ course }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   return (
     <Card style={{ width: '15rem'}} className='course-card' >
       <Card.Img 
       variant="top" 
-      src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg"
+      src= {course.course_image}
       onLoad={() => setImageLoaded(true)}
        /> 
       {!imageLoaded && <BorderSpinner />}
-      <Card.Body >
-        <Card.Title>Card title</Card.Title>
+      <Card.Body className='d-flex flex-column'>
+        <Card.Title>{course.course_name}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the bulk of the card's content.
+          {course.course_info} 
         </Card.Text>
-        <Button variant="success">Go somewhere</Button>
+        <Button variant="success" className='mt-auto'>Course Details</Button>
       </Card.Body>
     </Card>
   );
