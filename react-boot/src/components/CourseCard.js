@@ -4,12 +4,17 @@ import Button from 'react-bootstrap/Button';
 
 
 import BorderSpinner from './BorderSpinner';
+import CenteredModal from './CenteredModal';
 
 import { useState } from 'react';
 
 function CourseCard({ course }) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
   return (
+    <>
     <Card style={{ width: '15rem'}} className='course-card' >
       <Card.Img 
       variant="top" 
@@ -22,9 +27,11 @@ function CourseCard({ course }) {
         <Card.Text>
           {course.course_info} 
         </Card.Text>
-        <Button variant="success" className='mt-auto'>Course Details</Button>
+        <Button variant="success" className='mt-auto' onClick={() => setShowModal(true)}>Course Details</Button>
       </Card.Body>
     </Card>
+    {showModal && <CenteredModal show={showModal} onHide={handleCloseModal} course={course}/>}
+    </>
   );
 }
 

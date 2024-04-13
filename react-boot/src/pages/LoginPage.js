@@ -19,7 +19,6 @@ function LoginPage({showModal, setShowModal}) {
                     Do not have an account yet? <Link to="/register">Register</Link>
                 </div>
 
-                <CenteredModal show={showModal} onHide={() => setShowModal(false)} />
 
               </div>
 

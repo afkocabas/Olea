@@ -1,29 +1,44 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import useAuth from '../hooks/useAuth';
+import {useNavigate} from 'react-router-dom';
+
 function CenteredModal(props) {
+  const {isAuthenticated} = useAuth();
+  const navigation = useNavigate();
+  
+
+  const handleNavigationToLogin = () => {
+    navigation('/login',);
+  }
+
   return (
     <Modal
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
-      centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
+          {props.course.course_name}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
+        <h6>Course Content:</h6>
         <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
+          {props.course.course_info}
         </p>
+        <h6>Course Details:</h6>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+
+        {isAuthenticated ? (
+          <Button variant="success">Enroll</Button>
+        ) : (
+          <Button variant="secondary" onClick={handleNavigationToLogin} >Login to Enroll</Button>
+        )}
+
       </Modal.Footer>
     </Modal>
   );
