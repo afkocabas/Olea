@@ -1,5 +1,4 @@
 import LoginForm from "../components/LoginForm"
-import CenteredModal from "../components/CenteredModal"
 import { Link } from "react-router-dom";
 
 function LoginPage({showModal, setShowModal}) {
