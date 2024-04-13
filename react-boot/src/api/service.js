@@ -5,7 +5,6 @@ async function httpRequest(endpoint, options) {
         const response = await axios(endpoint, options);
         return response;
     } catch (error) {
-        console.error(error);
         throw error;
     }
 }
