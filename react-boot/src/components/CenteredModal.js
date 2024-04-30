@@ -10,6 +10,7 @@ import useEnroll from '../hooks/useEnroll';
 import useAlert from '../hooks/useAlert';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import { Row, Col} from 'react-bootstrap';
 
 function CenteredModal(props) {
   const [alertMessage, setAlertMessage] = useState("");
@@ -69,6 +70,24 @@ function CenteredModal(props) {
           {props.course.course_info}
         </p>
         <h6>Course Details:</h6>
+
+        <Row>
+
+          <Col m='6' >
+            <span><strong>Scope:</strong> {props.course.course_major}</span>
+            <br />
+            <span><strong>Duration</strong>: {props.course.course_duration} hours</span>
+          </Col>
+          <Col m='6'>
+            <span><strong>Instructor:</strong> {props.course.course_teacher}</span>
+            <br />
+            <span><strong>Price:</strong> ${props.course.course_price}</span>
+          </Col>
+
+        </Row>
+
+
+
         {showAlert && <CustomAlert message={alertMessage} variant={alertVariant} />}
       </Modal.Body>
       <Modal.Footer>

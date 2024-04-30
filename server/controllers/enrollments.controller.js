@@ -25,3 +25,22 @@ export const enrollUserInCourse = async (req, res) => {
         res.status(500).json({message: 'Internal server error'});
     }
 };
+
+export const getEnrollmentsForUser = async (req, res) => {
+    const { userID } = req.params;
+
+    try {
+        const [enrollments] = await database.
+        query('SELECT courses.* FROM takes, courses WHERE courses.course_id = takes.course_id AND takes.user_id = ?', [userID]);
+
+        if (enrollments.length === 0) {
+            return res.status(404).json({message: 'No enrollments found for this user'});
+        }
+
+        res.status(200).json(enrollments);
+        console.log(enrollments)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({message: 'Internal server error'});
+    }
+}
