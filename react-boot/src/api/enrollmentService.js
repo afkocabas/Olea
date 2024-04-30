@@ -14,3 +14,14 @@ export async function enrollUserToCourse(user_id, course_id) {
 
     return httpRequest(ENROLLMENTS_ENDPOINT, options);
 }
+
+export async function fetchEnrollmentsByUserId(user_id) {
+    // Define the options for the call
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    };
+    return httpRequest(`${ENROLLMENTS_ENDPOINT}/${user_id}`, options);
+}
