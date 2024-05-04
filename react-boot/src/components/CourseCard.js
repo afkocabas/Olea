@@ -1,10 +1,12 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 
 import BorderSpinner from './BorderSpinner';
 import CenteredModal from './CenteredModal';
+import StarRating from './StarRating';
 
 import { useState } from 'react';
 
@@ -27,7 +29,13 @@ function CourseCard({ course }) {
         <Card.Text>
           {course.course_info} 
         </Card.Text>
-        <Button variant="success" className='mt-auto' onClick={() => setShowModal(true)}>Course Details</Button>
+        <Container className='mt-auto d-flex flex-column' >
+          <StarRating rating={course.avg_rating} />
+            <Container className='d-flex justify-content-center'>
+              <p className='text-muted'>Rating: {course.avg_rating}/5.0</p>
+            </Container>
+          <Button variant="success" className='' onClick={() => setShowModal(true)}>Course Details</Button>
+        </Container>
       </Card.Body>
     </Card>
     {showModal && <CenteredModal show={showModal} onHide={handleCloseModal} course={course}/>}
