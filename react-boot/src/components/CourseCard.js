@@ -30,7 +30,7 @@ function CourseCard({ course }) {
           {course.course_info} 
         </Card.Text>
         <Container className='mt-auto d-flex flex-column' >
-          <StarRating rating={course.avg_rating} />
+          <StarRating rating={course.avg_rating} readOnly={true} />
             <Container className='d-flex justify-content-center'>
               <p className='text-muted'>Rating: {course.avg_rating}/5.0</p>
             </Container>

@@ -1,5 +1,5 @@
 import express from 'express';
-import { enrollUserInCourse, getEnrollmentsForUser } from '../controllers/enrollments.controller.js';
+import { enrollUserInCourse, getEnrollmentsForUser, updateProgress } from '../controllers/enrollments.controller.js';
 
 const enrollmentsRouter = express.Router();
 
@@ -8,5 +8,7 @@ enrollmentsRouter.post('/', enrollUserInCourse);
 
 // get all the enrollments for a user
 enrollmentsRouter.get('/:userID', getEnrollmentsForUser)
+
+enrollmentsRouter.post('/updateProgress', updateProgress)
 
 export default enrollmentsRouter;

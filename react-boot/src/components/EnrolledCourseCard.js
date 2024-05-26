@@ -27,7 +27,8 @@ return (
     <Card.Text>
         {course.course_info} 
     </Card.Text>
-        <ProgressBar className='mb-5' now={10}  />
+        <h5 className='mt-auto'>Progress: {course.chapters_completed *10}%</h5>
+        <ProgressBar className='mb-5' now={10 * course.chapters_completed} animated variant='primary'  />
     
         <Button className='mt-auto' variant="success" as={Link} to={`/courses/${course.course_id}`}>View Course</Button>
     </Card.Body>

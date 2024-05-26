@@ -1,14 +1,11 @@
 import Container from 'react-bootstrap/Container';
 import LoadingPage from './LoadingPage';
-import CoursesList from '../components/CoursesList';
 
-import useUser from '../hooks/useUser';
 import { useUserEnrollments } from '../hooks/useUserEnrollments';
 import EnrolledCoursesList from '../components/EnrolledCourseList';
 
 function ProfilePage() {
-    const { userName} = useUser();
-    const { userEnrollments, loading, error } = useUserEnrollments();
+    const { userEnrollments, loading,} = useUserEnrollments();
 
 
     if (loading) {return <LoadingPage />; }

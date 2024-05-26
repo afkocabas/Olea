@@ -25,3 +25,18 @@ export async function fetchEnrollmentsByUserId(user_id) {
     };
     return httpRequest(`${ENROLLMENTS_ENDPOINT}/${user_id}`, options);
 }
+
+
+export async function updateEnrollmentsProgress(userID, courseID){
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({ userID: userID, courseID: courseID })
+    };
+
+    return httpRequest(`${ENROLLMENTS_ENDPOINT}/updateProgress`, options);
+
+}

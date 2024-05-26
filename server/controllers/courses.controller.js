@@ -10,9 +10,14 @@ export async function getAllCourses(req, res) {
     }
 }
 
+// For a specific user
 export async function getCourseById(req, res) {
+    const courseID = req.params.id;
+    const userID = req.params.userID;
     try {
-        const [rows] = await database.query("SELECT * FROM courses WHERE course_id = ?", [req.params.id]);
+        const [rows] = await database.query(
+            "SELECT * FROM takes, courses WHERE takes.user_id = ? AND takes.course_id = ? AND takes.course_id = courses.course_id "
+            ,[userID, courseID ]);
         if (rows.length === 0) {
             return res.status(404).json({ message: "Course not found" });
         }
